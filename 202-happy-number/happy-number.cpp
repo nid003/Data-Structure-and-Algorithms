@@ -1,33 +1,29 @@
 class Solution {
 public:
 
-    int sumSquare(int n) {
-
-        int ans = 0;
+    int nextNumber(int n) {
+        int sum = 0;
 
         while (n > 0) {
-            int num = n % 10;
-            ans += num * num;
+            int digit = n % 10;
+            sum += digit * digit;
             n = n / 10;
         }
 
-        return ans;
+        return sum;
     }
 
     bool isHappy(int n) {
 
-        unordered_set<int> st;
+        int slow = n;
+        int fast = n;
 
-        while (n != 1) {
+        do {
+            slow = nextNumber(slow);
+            fast = nextNumber(nextNumber(fast));
 
-            if (st.count(n))
-                return false;
+        } while (slow != fast);
 
-            st.insert(n);
-
-            n = sumSquare(n);
-        }
-
-        return true;
+        return slow == 1;
     }
 };
